@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВИДЕОКОНФЕРЕНЦИЯ</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>VOID</h1>
+            <h1>ВИДЕОЗВОНКИ</h1>
+           
+        </header>
+
+        <!-- Экран входа -->
+        <div id="join-screen" class="screen active">
+            <div class="join-options">
+                <!-- Карточка создания встречи -->
+                <div class="option-card">
+                    <h3>СОЗДАТЬ ВСТРЕЧУ</h3>
+                    <p>Новая комната для конференции</p>
+                    <button id="createRoomBtn" class="btn-primary">СОЗДАТЬ</button>
+                </div>
+                
+                <!-- Карточка присоединения -->
+                <div class="option-card">
+                    <h3>ПРИСОЕДИНИТЬСЯ</h3>
+                    <p>Введите код комнаты</p>
+                    <input type="text" id="roomCode" placeholder="Например: ABC123" maxlength="6">
+                    <button id="joinRoomBtn" class="btn-secondary">ВОЙТИ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран комнаты -->
+        <div id="room-screen" class="screen">
+            <div class="room-header">
+                <!-- Информация о комнате -->
+                <div class="room-info">
+                    <span class="room-label">КОМНАТА</span>
+                    <span id="roomIdDisplay">---</span>
+                    <button id="copyRoomId" class="btn-icon" title="Копировать код">📋</button>
+                </div>
+                
+                <!-- Панель управления -->
+                <div class="controls">
+                    <button id="toggleMic" class="btn-icon active" title="Микрофон">МИКРО</button>
+                    <button id="toggleCamera" class="btn-icon active" title="Камера">КАМЕРА</button>
+                    <button id="toggleScreen" class="btn-icon" title="Демонстрация экрана">ЭКРАН</button>
+                    <button id="leaveRoomBtn" class="btn-danger">ВЫЙТИ</button>
+                </div>
+            </div>
+
+            <!-- Сетка видео -->
+            <div id="videoGrid" class="video-grid"></div>
+            
+            <!-- Счетчик участников -->
+            <div class="participants-count">
+                УЧАСТНИКОВ: <span id="participantsCount">1</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
