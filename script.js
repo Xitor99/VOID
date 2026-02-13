@@ -1,5 +1,3 @@
-// УПРОЩЕННАЯ ВЕРСИЯ ДЛЯ PYTHON СЕРВЕРА
-// Только локальное видео, без подключения других
 
 const joinScreen = document.getElementById('join-screen');
 const roomScreen = document.getElementById('room-screen');
@@ -20,7 +18,7 @@ let isMicOn = true;
 let isCameraOn = true;
 let currentRoom = null;
 
-// Просто показываем локальное видео
+
 async function initLocalStream() {
     try {
         localStream = await navigator.mediaDevices.getUserMedia({
@@ -54,7 +52,6 @@ async function initLocalStream() {
     }
 }
 
-// Кнопка "Создать встречу" - теперь работает!
 createRoomBtn.addEventListener('click', () => {
     currentRoom = Math.random().toString(36).substring(2, 8).toUpperCase();
     roomIdDisplay.textContent = currentRoom;
@@ -63,7 +60,7 @@ createRoomBtn.addEventListener('click', () => {
     initLocalStream();
 });
 
-// Кнопка "Присоединиться"
+
 joinRoomBtn.addEventListener('click', () => {
     const roomId = roomCode.value.trim().toUpperCase();
     if (roomId) {
@@ -77,13 +74,12 @@ joinRoomBtn.addEventListener('click', () => {
     }
 });
 
-// Копировать код
 copyRoomId.addEventListener('click', () => {
     navigator.clipboard.writeText(currentRoom);
     alert('Код скопирован!');
 });
 
-// Покинуть
+
 leaveRoomBtn.addEventListener('click', () => {
     if (localStream) {
         localStream.getTracks().forEach(track => track.stop());
@@ -97,7 +93,7 @@ leaveRoomBtn.addEventListener('click', () => {
     currentRoom = null;
 });
 
-// Микрофон
+
 toggleMicBtn.addEventListener('click', () => {
     if (localStream) {
         const audioTrack = localStream.getAudioTracks()[0];
@@ -110,7 +106,7 @@ toggleMicBtn.addEventListener('click', () => {
     }
 });
 
-// Камера
+
 toggleCameraBtn.addEventListener('click', () => {
     if (localStream) {
         const videoTrack = localStream.getVideoTracks()[0];
@@ -123,7 +119,7 @@ toggleCameraBtn.addEventListener('click', () => {
     }
 });
 
-// Экран
+
 toggleScreenBtn.addEventListener('click', async () => {
     try {
         if (!screenStream) {
@@ -159,4 +155,5 @@ function stopScreenSharing() {
         
         toggleScreenBtn.classList.remove('active');
     }
+
 }
