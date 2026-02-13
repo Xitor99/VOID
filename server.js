@@ -21,7 +21,7 @@ const rooms = new Map();
 io.on('connection', (socket) => {
   console.log('Новое подключение:', socket.id);
 
-  // Создание комнаты
+
   socket.on('create-room', () => {
     const roomId = generateRoomId();
     rooms.set(roomId, new Set([socket.id]));
@@ -30,17 +30,17 @@ io.on('connection', (socket) => {
     console.log(`Комната создана: ${roomId} пользователем ${socket.id}`);
   });
 
-  // Подключение к комнате
+
   socket.on('join-room', (roomId) => {
     const room = rooms.get(roomId);
     if (room) {
       room.add(socket.id);
       socket.join(roomId);
       
-      // Уведомляем всех в комнате о новом участнике
+
       socket.to(roomId).emit('user-connected', socket.id);
       
-      // Отправляем список существующих участников новому пользователю
+ 
       const existingUsers = Array.from(room).filter(id => id !== socket.id);
       socket.emit('existing-users', existingUsers);
       
@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  // WebRTC сигнализация
+
   socket.on('offer', (data) => {
     socket.to(data.target).emit('offer', {
       sdp: data.sdp,
@@ -72,11 +72,11 @@ io.on('connection', (socket) => {
     });
   });
 
-  // Отключение
+
   socket.on('disconnect', () => {
     console.log('Пользователь отключился:', socket.id);
     
-    // Удаляем пользователя из всех комнат
+
     rooms.forEach((participants, roomId) => {
       if (participants.has(socket.id)) {
         participants.delete(socket.id);
@@ -98,4 +98,5 @@ function generateRoomId() {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Сервер запущен на http://localhost:${PORT}`);
+
 });
